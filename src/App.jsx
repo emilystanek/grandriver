@@ -1,4 +1,3 @@
-import './App.css'
 import MapView from './MapView'
 
 function App() {
