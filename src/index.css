@@ -1,0 +1,121 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.checkbox-list {
+  list-style: none; /* Remove default list bullets */
+  padding: 0;
+  margin: 0;
+}
+
+.checkbox-list li {
+  margin-bottom: 10px;
+}
+
+.checkbox-list input[type="checkbox"] {
+  /* Hide the default checkbox */
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  /* Basic styling for the custom checkbox */
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  display: inline-block;
+  vertical-align: middle; /* Align with label text */
+  margin-right: 8px; /* Space between checkbox and label */
+  cursor: pointer;
+}
+
+.checkbox-list input[type="checkbox"]:checked {
+  background-color: #54d68a; /* Background color when checked */
+  border-color: #54d68a;
+}
+
+.checkbox-list input[type="checkbox"]:checked::before {
+  /* Create a custom checkmark using a pseudo-element */
+  content: '\2713'; /* Unicode checkmark character */
+  display: block;
+  color: white;
+  font-size: 14px;
+  line-height: 18px; /* Vertically center the checkmark */
+  text-align: center;
+}
+
+.checkbox-list label {
+  vertical-align: middle; /* Align with custom checkbox */
+  cursor: pointer;
+}
+
+.checkbox-list input[type="checkbox"]:focus {
+  outline: 2px solid #007bff; /* Focus style for accessibility */
+  outline-offset: 2px;
+}
