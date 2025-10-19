@@ -80,7 +80,7 @@ button:focus-visible {
 
 .checkbox-list input[type="checkbox"] {
   /* Hide the default checkbox */
-  appearance: none; 
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 
@@ -102,7 +102,7 @@ button:focus-visible {
 
 .checkbox-list input[type="checkbox"]:checked::before {
   /* Create a custom checkmark using a pseudo-element */
-  content: '\2713'; /* Unicode checkmark character */
+  content: "\2713"; /* Unicode checkmark character */
   display: block;
   color: white;
   font-size: 14px;
@@ -118,4 +118,37 @@ button:focus-visible {
 .checkbox-list input[type="checkbox"]:focus {
   outline: 2px solid #007bff; /* Focus style for accessibility */
   outline-offset: 2px;
+}
+
+#map-container {
+  width: 75vw;
+  height: 75vh;
+  border-radius: 0.5rem;
+  display: flex;
+}
+
+#sidebar {
+  width: 275px;
+  padding: 1rem;
+  background: #000;
+  border-radius: 0.5rem 0 0 0.5rem;
+  text-align: left;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 750px) {
+  #map-container {
+    width: 95vw;
+    display: block;
+    border-radius: 0.5rem;
+  }
+  #sidebar {
+    background-color: white;
+    text-align: center;
+    color: black;
+    width: auto;
+    padding: 0rem;
+  }
 }

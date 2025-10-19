@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import { useEffect,  useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MapView() {
   type Layers = {
@@ -15,11 +15,10 @@ export default function MapView() {
     waterbody: false,
   });
 
-
   useEffect(() => {
     if (waterbody && boundary) return; // Already loaded
     let mounted = true;
-    fetch("/data/boundary.geojson")
+    fetch("/grandriver/public/data/boundary.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch boundary");
         return res.json();
@@ -30,7 +29,7 @@ export default function MapView() {
         setBoundary(null);
       });
 
-    fetch("/data/waterbody.geojson")
+    fetch(" /grandriver/public/data/waterbody.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch waterbody");
         return res.json();
@@ -42,7 +41,7 @@ export default function MapView() {
       });
     return () => {
       mounted = false;
-    }
+    };
   }, [waterbody, boundary]);
 
   const toggleLayer = (name: keyof Layers) => {
@@ -50,62 +49,47 @@ export default function MapView() {
   };
 
   return (
-    <div style={{ display: "flex", width: "75vw", height: "75vh", borderRadius: "0.5rem" }}>
-      {/* Sidebar */}
-      <div
-        style={{
-          width: "275px",
-          padding: "1rem",
-          background: "#000",
-          borderRadius: "0.5rem 0 0 0.5rem",
-          textAlign: "left",
-          color: "#fff",
-        }}
-        role="region"
-        aria-label="Map layer controls"
-      >
+    <div id="map-container">
+      <div id="sidebar" role="region" aria-label="Map layer controls">
         <h1 id="layer-controls-heading">Grand River Layers</h1>
-      
-      <ul className="checkbox-list">
-        <li>
-        <label className="custom-checkbox" htmlFor="layer-boundary">
-          <input
-            id="layer-boundary"
-            type="checkbox"
-            checked={layers.boundary}
-            onChange={() => toggleLayer("boundary")}
-            aria-label="Toggle boundary layer"
-            aria-checked={layers.boundary}
-          />
-          Boundary
-        </label>
-        </li>
-        <br />
-        <li>
-        <label className="custom-checkbox" htmlFor="layer-waterbody">
-          <input
-            id="layer-waterbody"
-            type="checkbox"
-            checked={layers.waterbody}
-            onChange={() => toggleLayer("waterbody")}
-            aria-label="Toggle waterbody layer"
-            aria-checked={layers.waterbody}
-          />
-          Waterbody
-        </label>
-        </li>
-      </ul>
+
+        <ul className="checkbox-list">
+          <li>
+            <label className="custom-checkbox" htmlFor="layer-boundary">
+              <input
+                id="layer-boundary"
+                type="checkbox"
+                checked={layers.boundary}
+                onChange={() => toggleLayer("boundary")}
+                aria-label="Toggle boundary layer"
+                aria-checked={layers.boundary}
+              />
+              Boundary
+            </label>
+          </li>
+          <br />
+          <li>
+            <label className="custom-checkbox" htmlFor="layer-waterbody">
+              <input
+                id="layer-waterbody"
+                type="checkbox"
+                checked={layers.waterbody}
+                onChange={() => toggleLayer("waterbody")}
+                aria-label="Toggle waterbody layer"
+                aria-checked={layers.waterbody}
+              />
+              Waterbody
+            </label>
+          </li>
+        </ul>
       </div>
 
       <MapContainer
-        {...({
-          center: [43.544811, -80.248108],
-          zoom: 8,
-          style: { height: "75vh", flex: 1, borderRadius: "0 0.5rem 0.5rem 0" },
-          "aria-label": "Map showing Grand River and selected layers",
-          role: "application",
-          "aria-describedby": "layer-controls-heading",
-        } as any)}
+        aria-describedby="layer-controls-heading"
+        aria-label="Map showing Grand River and selected layers"
+        center={[43.544811, -80.248108]}
+        zoom={8}
+        style={{ height: "75vh", flex: 1, borderRadius: "0 0.5rem 0.5rem 0" }}
       >
         <TileLayer
           {...({
@@ -121,7 +105,7 @@ export default function MapView() {
             pathOptions={{ color: "orange", weight: 0.5, fillOpacity: 0.2 }}
           />
         )}
-       
+
         {layers.waterbody && waterbody && (
           <GeoJSON
             data={waterbody}
