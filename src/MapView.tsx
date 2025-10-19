@@ -1,6 +1,5 @@
-// src/MapView.jsx
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
-import { useEffect, useState } from "react";
+import { useEffect,  useState } from "react";
 
 export default function MapView() {
   type Layers = {
@@ -8,15 +7,18 @@ export default function MapView() {
     waterbody: boolean;
   };
 
+  const [boundary, setBoundary] = useState<any>(null);
+  const [waterbody, setWaterbody] = useState<any>(null);
+
   const [layers, setLayers] = useState<Layers>({
     boundary: true,
     waterbody: false,
   });
 
-  const [boundary, setBoundary] = useState<any | null>(null);
-  const [waterbody, setWaterbody] = useState<any | null>(null);
 
   useEffect(() => {
+    if (waterbody && boundary) return; // Already loaded
+    let mounted = true;
     fetch("/data/boundary.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch boundary");
@@ -38,7 +40,10 @@ export default function MapView() {
         console.error("Waterbody fetch error:", err);
         setWaterbody(null);
       });
-  }, []);
+    return () => {
+      mounted = false;
+    }
+  }, [waterbody, boundary]);
 
   const toggleLayer = (name: keyof Layers) => {
     setLayers((prev) => ({ ...prev, [name]: !prev[name] }));
