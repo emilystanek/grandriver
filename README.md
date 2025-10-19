@@ -1,4 +1,4 @@
-# Grand River watershed — GIS description
+# Grand River — GIS Data App
 
 A concise GIS-focused map of the Grand River watershed boundary and primary watercourse intended for mapping, analysis, and data exchange.
 
