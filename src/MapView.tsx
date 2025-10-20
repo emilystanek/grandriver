@@ -18,7 +18,7 @@ export default function MapView() {
   useEffect(() => {
     if (waterbody && boundary) return; // Already loaded
     let mounted = true;
-    fetch("/grandriver/public/data/boundary.geojson")
+    fetch("./data/boundary.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch boundary");
         return res.json();
@@ -29,7 +29,7 @@ export default function MapView() {
         setBoundary(null);
       });
 
-    fetch(" /grandriver/public/data/waterbody.geojson")
+    fetch("./data/waterbody.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch waterbody");
         return res.json();
