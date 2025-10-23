@@ -12,7 +12,7 @@ export default function MapView() {
 
   const [layers, setLayers] = useState<Layers>({
     boundary: true,
-    waterbody: false,
+    waterbody: true,
   });
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function MapView() {
         setBoundary(null);
       });
 
-    fetch("./data/waterbody.geojson")
+    fetch(" /grandriver/public/data/waterbody.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch waterbody");
         return res.json();
