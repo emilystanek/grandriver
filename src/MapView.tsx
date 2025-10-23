@@ -29,7 +29,7 @@ export default function MapView() {
         setBoundary(null);
       });
 
-    fetch(" /grandriver/public/data/waterbody.geojson")
+    fetch("./data/waterbody.geojson")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch waterbody");
         return res.json();
