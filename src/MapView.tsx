@@ -1,11 +1,15 @@
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import { useEffect, useState } from "react";
+import { getBoundaryGeoJSON, getWaterbodyGeoJSON } from "./data-access";
 
 export default function MapView() {
   type Layers = {
     boundary: boolean;
     waterbody: boolean;
   };
+
+  const boundaryResponse = getBoundaryGeoJSON();
+  const waterbodyResponse = getWaterbodyGeoJSON();
 
   const [boundary, setBoundary] = useState<any>(null);
   const [waterbody, setWaterbody] = useState<any>(null);
@@ -18,27 +22,18 @@ export default function MapView() {
   useEffect(() => {
     if (waterbody && boundary) return; // Already loaded
     let mounted = true;
-    fetch("./data/boundary.geojson")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch boundary");
-        return res.json();
+    Promise.all([waterbodyResponse, boundaryResponse])
+      .then(([waterbodyData, boundaryData]) => {
+        if (mounted) {
+          setWaterbody(waterbodyData);
+          setBoundary(boundaryData);
+        }
       })
-      .then(setBoundary)
-      .catch((err) => {
-        console.error("Boundary fetch error:", err);
-        setBoundary(null);
+      .catch((error) => {
+        console.error("Error loading GeoJSON data:", error);
       });
 
-    fetch("./data/waterbody.geojson")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch waterbody");
-        return res.json();
-      })
-      .then(setWaterbody)
-      .catch((err) => {
-        console.error("Waterbody fetch error:", err);
-        setWaterbody(null);
-      });
+    
     return () => {
       mounted = false;
     };
